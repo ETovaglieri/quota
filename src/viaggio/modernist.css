@@ -1,0 +1,461 @@
+/* Design system "Modernist" per Quota — adattato da
+ * design_handoff_quota/_ds/modernist-.../styles.css. Tutto racchiuso sotto
+ * `.quota` con variabili e classi prefissate `q-`, per restare autonomo da
+ * qualunque altro tema Tailwind condivida in futuro lo stesso codebase.
+ *
+ * Flat, architettonico, Archivo. Rosso quasi-mono su fondo chiaro, raggio 0
+ * dappertutto, righe divisorie forti (2px tra sezioni maggiori, 1px tra righe
+ * di lista). Tutto flush left. Accento con parsimonia. */
+
+.quota {
+  --q-color-bg: #f3f2f2;
+  --q-color-surface: #eae9e9;
+  --q-color-text: #201e1d;
+  --q-color-accent: #ec3013;
+  --q-color-divider: color-mix(in srgb, #201e1d 40%, transparent);
+
+  --q-neutral-100: #f8f4f4;
+  --q-neutral-200: #eae7e7;
+  --q-neutral-300: #d7d3d3;
+  --q-neutral-400: #bab6b6;
+  --q-neutral-500: #9b9797;
+  --q-neutral-600: #7d7979;
+  --q-neutral-700: #605d5d;
+  --q-neutral-800: #444141;
+  --q-neutral-900: #2d2b2b;
+
+  --q-accent-100: #fff2ef;
+  --q-accent-200: #ffe0d9;
+  --q-accent-300: #ffc4b8;
+  --q-accent-400: #ff9783;
+  --q-accent-500: #ff563c;
+  --q-accent-600: #dd2b0f;
+  --q-accent-700: #ae1800;
+  --q-accent-800: #7c1405;
+  --q-accent-900: #4d170e;
+
+  /* Colori per categoria di spesa (README del mockup) */
+  --q-cat-voli: var(--q-color-accent);
+  --q-cat-alloggio: var(--q-neutral-800);
+  --q-cat-trasporti: var(--q-accent-400);
+  --q-cat-cibo: var(--q-neutral-600);
+  --q-cat-attivita: var(--q-accent-700);
+  --q-cat-altro: var(--q-neutral-400);
+
+  --q-font: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  --q-space-1: 4px;
+  --q-space-2: 8px;
+  --q-space-3: 12px;
+  --q-space-4: 16px;
+  --q-space-6: 24px;
+  --q-space-8: 32px;
+
+  --q-shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+
+  font-family: var(--q-font);
+  background: var(--q-color-bg);
+  color: var(--q-color-text);
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 400;
+  min-height: 100vh;
+}
+
+.quota *,
+.quota *::before,
+.quota *::after {
+  box-sizing: border-box;
+}
+
+.quota h1,
+.quota h2,
+.quota h3,
+.quota h4,
+.quota h5,
+.quota h6 {
+  font-family: var(--q-font);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.quota p {
+  margin: 0;
+}
+
+.quota button,
+.quota input,
+.quota select,
+.quota textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+.quota :focus {
+  outline: none;
+}
+.quota :focus-visible {
+  outline: 2px solid var(--q-color-accent);
+  outline-offset: 2px;
+}
+
+.q-kicker {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--q-color-accent);
+  font-weight: 800;
+}
+
+.q-micro {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--q-neutral-600);
+  font-weight: 800;
+}
+
+.q-muted {
+  color: color-mix(in srgb, var(--q-color-text) 55%, transparent);
+}
+
+/* — divisori — */
+.q-hr {
+  height: 2px;
+  border: 0;
+  margin: 0;
+  background: var(--q-color-divider);
+}
+.q-hr-1 {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: color-mix(in srgb, var(--q-color-text) 15%, transparent);
+}
+
+/* — bottoni — */
+.q-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--q-font);
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--q-color-text);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 11px 16px;
+  border-radius: 0;
+}
+.q-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.q-btn-primary {
+  background: var(--q-color-accent);
+  color: var(--q-color-bg);
+}
+.q-btn-primary:hover:not(:disabled) {
+  background: var(--q-accent-600);
+}
+.q-btn-primary:active:not(:disabled) {
+  background: var(--q-accent-700);
+}
+.q-btn-secondary {
+  border-color: var(--q-color-divider);
+}
+.q-btn-secondary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--q-color-text) 7%, transparent);
+}
+.q-btn-ghost {
+  color: var(--q-color-accent);
+  padding-inline: 4px;
+}
+.q-btn-ghost:hover {
+  background: color-mix(in srgb, var(--q-color-accent) 10%, transparent);
+}
+.q-btn-block {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* — form — */
+.q-field > label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: color-mix(in srgb, var(--q-color-text) 70%, transparent);
+}
+.q-input {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--q-color-text);
+  caret-color: var(--q-color-accent);
+  background: var(--q-color-surface);
+  border: 1px solid var(--q-color-divider);
+  border-radius: 0;
+}
+.q-input:hover {
+  border-color: color-mix(in srgb, var(--q-color-text) 45%, transparent);
+}
+.q-input:focus-visible {
+  border-color: var(--q-color-accent);
+  outline-offset: 0;
+}
+.q-input::placeholder {
+  color: var(--q-neutral-500);
+}
+
+.q-seg {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 2px solid var(--q-color-divider);
+}
+.q-seg-opt {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 8px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  color: var(--q-color-text);
+}
+.q-seg-opt + .q-seg-opt {
+  border-left: 1px solid var(--q-color-divider);
+}
+.q-seg-opt[data-attivo='true'] {
+  background: var(--q-color-accent);
+  color: var(--q-color-bg);
+}
+
+.q-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 5px 11px;
+  border-radius: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--q-color-divider);
+  color: var(--q-color-text);
+}
+.q-tag[data-attivo='true'] {
+  background: var(--q-color-accent);
+  color: var(--q-color-bg);
+  border-color: var(--q-color-accent);
+}
+.q-tag-neutral {
+  background: var(--q-neutral-100);
+  color: var(--q-neutral-800);
+  border-color: transparent;
+  cursor: default;
+}
+
+/* — nav — */
+/* display: nessuno qui apposta — lo decide la utility Tailwind
+ * (hidden/lg:flex) al punto d'uso: una regola incondizionata qui vincerebbe
+ * sempre sulle utility responsive per pari specificità e ordine successivo
+ * nel bundle. */
+.q-nav {
+  align-items: center;
+  gap: var(--q-space-4);
+  padding: var(--q-space-3) var(--q-space-4);
+  border-bottom: 2px solid var(--q-color-divider);
+}
+.q-nav-brand {
+  font-family: var(--q-font);
+  font-weight: 800;
+  font-size: 18px;
+  margin-right: auto;
+  letter-spacing: -0.01em;
+}
+.q-nav a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 14px;
+}
+.q-nav a[aria-current='page'] {
+  color: var(--q-color-accent);
+}
+
+/* — tabelle — */
+.q-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.q-table th {
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--q-neutral-600);
+  padding: var(--q-space-2);
+  border-bottom: 2px solid var(--q-color-divider);
+}
+.q-table td {
+  padding: var(--q-space-2);
+  border-bottom: 1px solid var(--q-color-divider);
+}
+.q-table .q-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* — avatar quadrato — */
+.q-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  font-weight: 800;
+  font-size: 10px;
+  background: var(--q-neutral-300);
+  color: var(--q-color-text);
+}
+.q-avatar[data-io='true'] {
+  background: var(--q-color-accent);
+  color: var(--q-color-bg);
+}
+
+/* — barra progresso / categoria — */
+.q-bar-track {
+  height: 4px;
+  background: var(--q-neutral-300);
+  width: 100%;
+}
+.q-bar-fill {
+  height: 100%;
+  background: var(--q-color-accent);
+}
+.q-bar-cat-track {
+  height: 8px;
+  background: var(--q-neutral-300);
+  width: 100%;
+}
+.q-bar-cat-fill {
+  height: 100%;
+}
+
+/* — tastierino numerico — */
+.q-keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--q-color-divider);
+  border: 1px solid var(--q-color-divider);
+}
+.q-keypad button {
+  background: var(--q-color-bg);
+  border: 0;
+  font-family: var(--q-font);
+  font-weight: 800;
+  font-size: 18px;
+  padding: 13px 0;
+  cursor: pointer;
+  color: var(--q-color-text);
+}
+.q-keypad button:active {
+  background: var(--q-neutral-200);
+}
+
+/* — overlay full-screen (Aggiungi spesa, Salda) — */
+.q-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--q-color-bg);
+  overflow-y: auto;
+}
+
+.q-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: var(--q-space-4);
+  background: color-mix(in srgb, var(--q-neutral-900) 50%, transparent);
+}
+.q-dialog {
+  width: min(420px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--q-space-3);
+  padding: var(--q-space-4);
+  background: var(--q-color-bg);
+  box-shadow: var(--q-shadow-lg);
+  border: 1px solid var(--q-color-divider);
+}
+
+/* — tab bar mobile — (display: lo decide Tailwind lg:hidden al punto d'uso,
+ * vedi nota sopra su .q-nav) */
+.q-tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 2px solid var(--q-color-divider);
+  background: var(--q-color-bg);
+}
+.q-tabbar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 9px 4px 11px;
+  text-decoration: none;
+  color: var(--q-neutral-600);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: transparent;
+}
+.q-tabbar a + a {
+  border-left: 1px solid var(--q-color-divider);
+}
+.q-tabbar a[aria-current='page'] {
+  background: var(--q-color-text);
+  color: var(--q-color-bg);
+}
+
+/* — poster (Riepilogo finale) — */
+.q-poster {
+  background: var(--q-color-accent);
+  color: var(--q-color-bg);
+  padding: var(--q-space-6) var(--q-space-4);
+}
+.q-poster .q-kicker {
+  color: var(--q-color-bg);
+  opacity: 0.85;
+}
+
+/* — stampa (esporta PDF) — */
+@media print {
+  .q-no-print {
+    display: none !important;
+  }
+  .quota {
+    background: #fff;
+  }
+}
