@@ -11,25 +11,25 @@ React + TypeScript + Vite, Tailwind CSS, Supabase (solo Postgres/RLS aperta,
 nessuna Auth). Design system proprio ("Modernist", scoped sotto `.quota` in
 `src/viaggio/modernist.css`) — Archivo, rosso, spigoli vivi.
 
-## Database condiviso
+## Database
 
-**Questo progetto usa lo stesso progetto Supabase di `famiglia-dashboard`**
-(un'altra app, non correlata), ma solo le tabelle `viaggio_*`, con le proprie
-policy RLS (`using(true) with check(true)`: chiunque abbia il link di un
-gruppo può leggere/scrivere solo i dati di quel gruppo). Le due app sono
-completamente indipendenti a livello di codice, hosting e dominio — condividono
-solo il database Postgres sottostante per evitare di duplicare
-l'infrastruttura per un caso d'uso a basso rischio.
+Progetto Supabase dedicato (org "Private", separato da quello di
+`famiglia-dashboard`): codice, hosting, dominio e database sono tutti
+indipendenti. Le policy RLS restano aperte (`using(true) with check(true)`):
+chiunque abbia il link di un gruppo può leggere/scrivere solo i dati di quel
+gruppo — non serve un account, coerente con "basta il nome" del prodotto.
 
-Le migration in `supabase/migrations/` sono qui **solo come documentazione**
-dello schema: sono già state applicate al progetto Supabase condiviso dal
-repo `famiglia-dashboard` (quello linkato via Supabase CLI). Non c'è bisogno
-di rieseguirle da qui.
+Le migration in `supabase/migrations/` sono quelle reali di questo progetto
+(CLI linkata a `xjfftogtcojqssnrmifn`). Per applicarne di nuove:
+
+```bash
+npx supabase db push --linked
+```
 
 ## Sviluppo
 
 ```bash
 npm install
-cp .env.example .env.local   # valorizza con le credenziali Supabase condivise
+cp .env.example .env.local   # valorizza con le credenziali del progetto Supabase di Quota
 npm run dev
 ```
