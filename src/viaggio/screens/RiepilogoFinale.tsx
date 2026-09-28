@@ -62,20 +62,20 @@ export default function RiepilogoFinale() {
     <div className="quota min-h-screen pb-24 lg:pb-0">
       <DesktopNav slug={slug} nomeIo={partecipanti.find((p) => p.id === io)?.nome ?? null} onNuovaSpesa={() => navigate(`/${slug}`)} />
 
-      <main className="mx-auto max-w-2xl pb-8">
+      <main className="mx-auto max-w-2xl pb-8 lg:max-w-4xl">
         <div className="q-poster">
           <p className="q-kicker">Riepilogo finale · {giorni} giorni</p>
-          <h1 className="mt-1 text-[34px]">{viaggio.nome}</h1>
+          <h1 className="mt-1 text-[34px] lg:text-[42px]">{viaggio.nome}</h1>
           <p className="mt-1 text-[20px] font-extrabold">
             {formattaEuroIT(totale)} in {spese.length} spese
           </p>
         </div>
 
-        <div className="grid grid-cols-2 border-b-2" style={{ borderColor: 'var(--q-color-divider)' }}>
-          <div className="border-r border-b" style={{ borderColor: 'var(--q-color-divider)' }}>
+        <div className="grid grid-cols-2 border-b-2 lg:grid-cols-4" style={{ borderColor: 'var(--q-color-divider)' }}>
+          <div className="border-r border-b lg:border-b-0" style={{ borderColor: 'var(--q-color-divider)' }}>
             <StatCard etichetta="Al giorno" valore={formattaEuroIT(alGiorno)} nota="per il gruppo" />
           </div>
-          <div className="border-b" style={{ borderColor: 'var(--q-color-divider)' }}>
+          <div className="border-b lg:border-r lg:border-b-0" style={{ borderColor: 'var(--q-color-divider)' }}>
             <StatCard etichetta="A testa al giorno" valore={formattaEuroIT(aTestaAlGiorno)} nota="media" />
           </div>
           <div className="border-r" style={{ borderColor: 'var(--q-color-divider)' }}>
@@ -94,7 +94,7 @@ export default function RiepilogoFinale() {
           </div>
         </div>
 
-        <div className="px-5 py-5">
+        <div className="px-5 py-5 lg:px-0 lg:py-8">
           <p className="q-micro">Chi ha pagato cosa</p>
           <table className="q-table mt-2">
             <thead>
@@ -120,15 +120,15 @@ export default function RiepilogoFinale() {
           </table>
         </div>
 
-        <div className="q-no-print space-y-2 px-5">
-          <button type="button" onClick={() => window.print()} className="q-btn q-btn-primary q-btn-block justify-center">
+        <div className="q-no-print space-y-2 px-5 lg:flex lg:flex-row-reverse lg:justify-end lg:gap-3 lg:space-y-0 lg:px-0">
+          <button type="button" onClick={() => window.print()} className="q-btn q-btn-primary q-btn-block justify-center lg:w-auto">
             Esporta PDF del viaggio
           </button>
           <button
             type="button"
             onClick={chiudiConti}
             disabled={chiudendo || trasferimenti.length > 0 || viaggio.chiuso}
-            className="q-btn q-btn-secondary q-btn-block justify-center"
+            className="q-btn q-btn-secondary q-btn-block justify-center lg:w-auto"
           >
             {viaggio.chiuso ? 'Conti chiusi' : `Chiudi i conti${trasferimenti.length > 0 ? ` (${trasferimenti.length} pagamenti)` : ''}`}
           </button>

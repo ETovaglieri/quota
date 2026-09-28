@@ -121,8 +121,9 @@ export default function ListaGruppi() {
 
   return (
     <div className="quota min-h-screen pb-10">
-      <header className="border-b-2 px-5 pb-4 pt-5" style={{ borderColor: 'var(--q-color-divider)' }}>
-        <h1 className="text-[30px]">I tuoi gruppi</h1>
+      <header className="border-b-2 px-5 pb-4 pt-5 lg:px-6" style={{ borderColor: 'var(--q-color-divider)' }}>
+        <p className="q-kicker">Quota</p>
+        <h1 className="text-[30px] lg:text-[36px]">I tuoi gruppi</h1>
         {haSaldiNoti && (
           <p className="q-muted mt-1 text-[13px]">
             Nel complesso ti spettano <b className="text-[var(--q-color-text)]">{formattaEuroIT(saldoComplessivo)}</b>
@@ -130,96 +131,102 @@ export default function ListaGruppi() {
         )}
       </header>
 
-      <main className="mx-auto max-w-2xl px-5">
-        {righe === null ? (
-          <p className="q-muted py-6 text-sm">Caricamento…</p>
-        ) : righe.length === 0 ? (
-          <p className="q-muted py-6 text-sm">
-            Nessun gruppo ancora su questo dispositivo. Creane uno qui sotto, oppure apri il link che ti ha mandato un
-            amico.
-          </p>
-        ) : (
-          righe.map((r) => (
-            <button
-              key={r.slug}
-              onClick={() => navigate(`/${r.slug}`)}
-              className="block w-full border-b py-4 text-left"
-              style={{ borderColor: 'var(--q-color-divider)', borderBottomWidth: 1 }}
-            >
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="text-[19px] font-extrabold">{r.nome}</span>
-                <span
-                  className="shrink-0 text-[15px] font-extrabold"
-                  style={{
-                    color:
-                      r.saldoIo === null || Math.abs(r.saldoIo) < 0.005
-                        ? 'var(--q-neutral-600)'
-                        : r.saldoIo > 0
-                          ? 'var(--q-accent-700)'
-                          : 'var(--q-color-text)',
-                  }}
+      <main className="mx-auto max-w-2xl px-5 py-2 lg:grid lg:max-w-5xl lg:grid-cols-[1fr_320px] lg:items-start lg:gap-10 lg:px-6 lg:py-8">
+        <div>
+          {righe === null ? (
+            <p className="q-muted py-6 text-sm">Caricamento…</p>
+          ) : righe.length === 0 ? (
+            <p className="q-muted py-6 text-sm">
+              Nessun gruppo ancora su questo dispositivo. Creane uno qui a fianco, oppure apri il link che ti ha
+              mandato un amico.
+            </p>
+          ) : (
+            <div className="lg:grid lg:grid-cols-2 lg:gap-4">
+              {righe.map((r) => (
+                <button
+                  key={r.slug}
+                  onClick={() => navigate(`/${r.slug}`)}
+                  className="block w-full border-b py-4 text-left lg:border lg:p-4"
+                  style={{ borderColor: 'var(--q-color-divider)', borderBottomWidth: 1 }}
                 >
-                  {r.saldoIo === null ? '—' : formattaSaldoIT(r.saldoIo)}
-                </span>
-              </div>
-              <div className="q-muted mt-2 flex items-baseline justify-between text-xs">
-                <span>
-                  {formattaIntervalloDate(r.dataInizio, r.dataFine)}
-                  {r.chiuso ? ' · chiuso' : ''}
-                </span>
-                <span>{r.nPartecipanti} partecipanti</span>
-              </div>
-              <div className="q-bar-track mt-2">
-                <div className="q-bar-fill" style={{ width: `${progressoGruppo(r)}%` }} />
-              </div>
-            </button>
-          ))
-        )}
+                  <div className="flex items-baseline justify-between gap-3">
+                    <span className="text-[19px] font-extrabold">{r.nome}</span>
+                    <span
+                      className="shrink-0 text-[15px] font-extrabold"
+                      style={{
+                        color:
+                          r.saldoIo === null || Math.abs(r.saldoIo) < 0.005
+                            ? 'var(--q-neutral-600)'
+                            : r.saldoIo > 0
+                              ? 'var(--q-accent-700)'
+                              : 'var(--q-color-text)',
+                      }}
+                    >
+                      {r.saldoIo === null ? '—' : formattaSaldoIT(r.saldoIo)}
+                    </span>
+                  </div>
+                  <div className="q-muted mt-2 flex items-baseline justify-between text-xs">
+                    <span>
+                      {formattaIntervalloDate(r.dataInizio, r.dataFine)}
+                      {r.chiuso ? ' · chiuso' : ''}
+                    </span>
+                    <span>{r.nPartecipanti} partecipanti</span>
+                  </div>
+                  <div className="q-bar-track mt-2">
+                    <div className="q-bar-fill" style={{ width: `${progressoGruppo(r)}%` }} />
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
-        <form onSubmit={creaGruppo} className="mt-6 space-y-3">
-          <div className="q-field">
-            <label>Nome del gruppo</label>
+        <div className="mt-2 lg:mt-0 lg:border lg:p-5" style={{ borderColor: 'var(--q-color-divider)' }}>
+          <form onSubmit={creaGruppo} className="space-y-3">
+            <div className="q-field">
+              <label>Nome del gruppo</label>
+              <input
+                className="q-input"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                placeholder="es. Highlands & Skye"
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="q-field col-span-3 sm:col-span-1 lg:col-span-3">
+                <label>Luogo</label>
+                <input className="q-input" value={luogo} onChange={(e) => setLuogo(e.target.value)} placeholder="es. Scozia" />
+              </div>
+              <div className="q-field lg:col-span-1">
+                <label>Dal</label>
+                <input type="date" className="q-input" value={dataInizio} onChange={(e) => setDataInizio(e.target.value)} />
+              </div>
+              <div className="q-field lg:col-span-2">
+                <label>Al</label>
+                <input type="date" className="q-input" value={dataFine} onChange={(e) => setDataFine(e.target.value)} />
+              </div>
+            </div>
+            <button type="submit" disabled={creando || !nome.trim()} className="q-btn q-btn-secondary q-btn-block">
+              + Nuovo gruppo
+            </button>
+            <p className="q-muted text-[11px]">Chi entra da link non deve creare un account: basta il nome.</p>
+            {errore && <p className="text-xs" style={{ color: 'var(--q-accent-700)' }}>{errore}</p>}
+          </form>
+
+          <div className="q-hr my-6" />
+
+          <form onSubmit={entraConCodice} className="flex gap-2">
             <input
               className="q-input"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              placeholder="es. Highlands & Skye"
+              value={codice}
+              onChange={(e) => setCodice(e.target.value)}
+              placeholder="Hai un codice? es. 7htq2wke"
             />
-          </div>
-          <div className="grid grid-cols-3 gap-2">
-            <div className="q-field col-span-3 sm:col-span-1">
-              <label>Luogo</label>
-              <input className="q-input" value={luogo} onChange={(e) => setLuogo(e.target.value)} placeholder="es. Scozia" />
-            </div>
-            <div className="q-field">
-              <label>Dal</label>
-              <input type="date" className="q-input" value={dataInizio} onChange={(e) => setDataInizio(e.target.value)} />
-            </div>
-            <div className="q-field">
-              <label>Al</label>
-              <input type="date" className="q-input" value={dataFine} onChange={(e) => setDataFine(e.target.value)} />
-            </div>
-          </div>
-          <button type="submit" disabled={creando || !nome.trim()} className="q-btn q-btn-secondary q-btn-block">
-            + Nuovo gruppo
-          </button>
-          <p className="q-muted text-[11px]">Chi entra da link non deve creare un account: basta il nome.</p>
-          {errore && <p className="text-xs" style={{ color: 'var(--q-accent-700)' }}>{errore}</p>}
-        </form>
-
-        <div className="q-hr my-6" />
-
-        <form onSubmit={entraConCodice} className="flex gap-2">
-          <input
-            className="q-input"
-            value={codice}
-            onChange={(e) => setCodice(e.target.value)}
-            placeholder="Hai un codice? es. 7htq2wke"
-          />
-          <button type="submit" disabled={!codice.trim()} className="q-btn q-btn-secondary shrink-0">
-            Vai
-          </button>
-        </form>
+            <button type="submit" disabled={!codice.trim()} className="q-btn q-btn-secondary shrink-0">
+              Vai
+            </button>
+          </form>
+        </div>
       </main>
     </div>
   )

@@ -120,7 +120,7 @@ export default function AggiungiSpesa({
 
   return (
     <div className="quota q-overlay-backdrop">
-      <div className="mx-auto max-w-lg px-5 pb-10 pt-5">
+      <div className="mx-auto max-w-lg px-5 pb-10 pt-5 lg:max-w-2xl">
         <div className="flex items-center justify-between border-b-2 pb-3" style={{ borderColor: 'var(--q-color-divider)' }}>
           <button type="button" onClick={onChiudi} className="q-btn q-btn-ghost">
             ← Annulla
@@ -147,14 +147,20 @@ export default function AggiungiSpesa({
             </div>
           </div>
 
-          <div className="q-field">
-            <label>Descrizione</label>
-            <input
-              className="q-input"
-              value={descrizione}
-              onChange={(e) => setDescrizione(e.target.value)}
-              placeholder="es. Cena al ristorante"
-            />
+          <div className="lg:grid lg:grid-cols-[1fr_180px] lg:gap-4">
+            <div className="q-field">
+              <label>Descrizione</label>
+              <input
+                className="q-input"
+                value={descrizione}
+                onChange={(e) => setDescrizione(e.target.value)}
+                placeholder="es. Cena al ristorante"
+              />
+            </div>
+            <div className="q-field mt-5 lg:mt-0">
+              <label>Data</label>
+              <input type="date" className="q-input" value={data} onChange={(e) => setData(e.target.value)} />
+            </div>
           </div>
 
           <div className="q-field">
@@ -192,11 +198,6 @@ export default function AggiungiSpesa({
             </div>
           </div>
 
-          <div className="q-field">
-            <label>Data</label>
-            <input type="date" className="q-input" value={data} onChange={(e) => setData(e.target.value)} />
-          </div>
-
           <div className="border p-3" style={{ borderColor: 'var(--q-color-divider)', background: 'var(--q-color-surface)' }}>
             <p className="q-micro">Divisione</p>
             <div className="mt-2">
@@ -216,7 +217,7 @@ export default function AggiungiSpesa({
               {modo === 'importi' && 'Inserisci gli importi esatti: la somma deve tornare al totale.'}
             </p>
 
-            <div className="mt-3 space-y-2">
+            <div className="mt-3 space-y-2 lg:columns-2 lg:gap-6 lg:space-y-0 [&>*]:break-inside-avoid lg:[&>*]:mb-2">
               {partecipanti.map((p) => {
                 const incluso = inclusi.has(p.id)
                 return (

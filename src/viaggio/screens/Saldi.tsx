@@ -57,63 +57,65 @@ export default function Saldi() {
         <span className="text-[15px] font-extrabold">Chi deve a chi</span>
       </header>
 
-      <main className="mx-auto max-w-2xl space-y-8 px-5 py-6">
-        <section>
-          <p className="q-micro">Saldi del gruppo</p>
-          <div className="mt-2 space-y-2">
-            {saldi.map((s) => (
-              <div key={s.id} className="flex items-center justify-between border-b py-2" style={{ borderColor: 'var(--q-color-divider)' }}>
-                <div className="flex items-center gap-2">
-                  <Avatar nome={s.nome} io={s.id === io} dimensione={26} />
-                  <span className="text-sm">{s.id === io ? 'Tu' : s.nome}</span>
-                </div>
-                <span className="text-sm font-extrabold" style={{ color: s.saldo > 0.005 ? 'var(--q-accent-700)' : undefined }}>
-                  {formattaSaldoIT(s.saldo)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section>
-          {trasferimenti.length > 0 ? (
-            <>
-              <h2 className="text-[30px]">{trasferimenti.length} pagamenti e siete in pari</h2>
-              <p className="q-muted mt-1 text-xs">
-                Quota compensa i debiti incrociati: invece di {numeroPagamentiUnoAUno} rimborsi tra tutti, ne bastano{' '}
-                {trasferimenti.length}.
-              </p>
-              <div className="mt-4">
-                {trasferimenti.map((t, i) => (
-                  <RigaSettlement key={i} trasferimento={t} io={io} onSalda={() => setConfermaTrasferimento(t)} />
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="border-2 p-6 text-center" style={{ borderColor: 'var(--q-color-accent)' }}>
-              <h2 className="text-xl" style={{ color: 'var(--q-accent-700)' }}>
-                Tutti in pari
-              </h2>
-              <p className="q-muted mt-1 text-xs">Nessun trasferimento da fare.</p>
-            </div>
-          )}
-        </section>
-
-        {pagamenti.length > 0 && (
+      <main className="mx-auto max-w-2xl px-5 py-6 lg:max-w-5xl lg:px-6">
+        <div className="space-y-8 lg:grid lg:grid-cols-2 lg:gap-10 lg:space-y-0">
           <section>
-            <p className="q-micro">Pagamenti registrati</p>
-            <div className="mt-2 space-y-1.5">
-              {pagamenti.map((p) => (
-                <div key={p.id} className="flex items-center justify-between text-xs">
-                  <span>
-                    {nomeDi(p.da)} → {p.a === io ? 'te' : nomeDi(p.a)}
+            <p className="q-micro">Saldi del gruppo</p>
+            <div className="mt-2 space-y-2">
+              {saldi.map((s) => (
+                <div key={s.id} className="flex items-center justify-between border-b py-2" style={{ borderColor: 'var(--q-color-divider)' }}>
+                  <div className="flex items-center gap-2">
+                    <Avatar nome={s.nome} io={s.id === io} dimensione={26} />
+                    <span className="text-sm">{s.id === io ? 'Tu' : s.nome}</span>
+                  </div>
+                  <span className="text-sm font-extrabold" style={{ color: s.saldo > 0.005 ? 'var(--q-accent-700)' : undefined }}>
+                    {formattaSaldoIT(s.saldo)}
                   </span>
-                  <span className="font-extrabold">{formattaEuroIT(p.importo)}</span>
                 </div>
               ))}
             </div>
+
+            {pagamenti.length > 0 && (
+              <div className="mt-8">
+                <p className="q-micro">Pagamenti registrati</p>
+                <div className="mt-2 space-y-1.5">
+                  {pagamenti.map((p) => (
+                    <div key={p.id} className="flex items-center justify-between text-xs">
+                      <span>
+                        {nomeDi(p.da)} → {p.a === io ? 'te' : nomeDi(p.a)}
+                      </span>
+                      <span className="font-extrabold">{formattaEuroIT(p.importo)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
-        )}
+
+          <section>
+            {trasferimenti.length > 0 ? (
+              <>
+                <h2 className="text-[26px] lg:text-[24px]">{trasferimenti.length} pagamenti e siete in pari</h2>
+                <p className="q-muted mt-1 text-xs">
+                  Quota compensa i debiti incrociati: invece di {numeroPagamentiUnoAUno} rimborsi tra tutti, ne bastano{' '}
+                  {trasferimenti.length}.
+                </p>
+                <div className="mt-4">
+                  {trasferimenti.map((t, i) => (
+                    <RigaSettlement key={i} trasferimento={t} io={io} onSalda={() => setConfermaTrasferimento(t)} />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="border-2 p-6 text-center" style={{ borderColor: 'var(--q-color-accent)' }}>
+                <h2 className="text-xl" style={{ color: 'var(--q-accent-700)' }}>
+                  Tutti in pari
+                </h2>
+                <p className="q-muted mt-1 text-xs">Nessun trasferimento da fare.</p>
+              </div>
+            )}
+          </section>
+        </div>
       </main>
 
       <TabBar slug={slug} />
